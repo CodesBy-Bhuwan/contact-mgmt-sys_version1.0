@@ -5,5 +5,7 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  // to activate dark mode
+  darkMode: "selector",
 }
 
