@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class Profile {
+public class ProfileController {
 
     @RequestMapping("/home")
     public String home(Model model){
@@ -15,5 +15,19 @@ public class Profile {
 
         return "home";
 
+    }
+
+    // About Me
+    @RequestMapping("/about")
+    public String aboutPage(){
+        System.out.println("page loading");
+        return "about";
+    }
+
+    // Service Page
+    @RequestMapping("/services")
+    public String servicesPage(){
+        System.out.println("services page loading");
+        return "services";
     }
 }
