@@ -11,7 +11,7 @@ public class ProfileController {
     public String home(Model model){
         System.out.println("Home page handler");
         model.addAttribute("name", "Bhuwan");
-        model.addAttribute("Youtube Channel", "BashyalBhuwan");
+        model.addAttribute("Youtube Channel", "CodesByBhuwan");
 
         return "home";
 
