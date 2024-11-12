@@ -12,9 +12,7 @@ public class ProfileController {
         System.out.println("Home page handler");
         model.addAttribute("name", "Bhuwan");
         model.addAttribute("Youtube Channel", "CodesByBhuwan");
-
         return "home";
-
     }
 
     // About Me
