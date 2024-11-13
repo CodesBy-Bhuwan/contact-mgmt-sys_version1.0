@@ -7,7 +7,9 @@
 </head>
 <body>
     <h1> About page Here!!! </h1>
-    <div class="host-tag" th:insert="~fragment/base :: base"></div>
+    <!-- This is thyemeleaf fragment 
+     Syntax: ~file_name :: fragment_name " -->
+    <div th:insert="~{fragment/base :: base}"></div>
     
 </body>
 </html>
