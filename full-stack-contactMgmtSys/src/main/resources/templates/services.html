@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" th-replace="`{base::parent({::#content},~{::title},~{::script})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Services</title>
 </head>
 <body>
-    <h1>All services Here!</h1>
-    <div class="host-tag" th:insert="~{fragment/base :: base}"></div>
+
+    <div id="content">
+        <h1>All services Here!</h1>
+    </div>
+<script>
+    console.log("Service Page")
+</script>
 </body>
 </html>

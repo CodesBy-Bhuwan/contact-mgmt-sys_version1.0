@@ -1,26 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- namespace of thyemeleaf denoted by xmlns:th 
+    th-fragment id syntax for creating fragment-->
+<html lang="en" 
+    th-fragment="parent(content,title,script)" 
+    xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- <script 
-     src="https://cdn.tailwindcss.com" >
-
-    </script> -->
-    <!-- <script>
-        tailwind config ={
-            theme: {
-                extend:{
-                    colors:{
-                        clifford:'#da373d',
-                    }
-                }
-            }
-        }
-    </script> -->
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" data-th-href="@{'/css/output.css'}" />
+    <title data-th-replace="~{title}">scmv1.0</title>
 </head>
 <body>
+    Smart Details Manger!
     
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 </html>
