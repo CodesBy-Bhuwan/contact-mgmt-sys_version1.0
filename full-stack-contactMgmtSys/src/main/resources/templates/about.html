@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- th:replace will use "parent" fragment from "index" file -->
+<html lang="en" th:replace="~{index :: parent(`{::#content},~{::title},~{::script})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>About</title>
 </head>
 <body>
-    <h1> About page Here!!! </h1>
-    <!-- This is thyemeleaf fragment 
-     Syntax: ~file_name :: fragment_name " -->
-    <div th:insert="~{fragment/base :: base}"></div>
-    
+    <div id="content">
+        <h1>This is about page!</h1>
+    </div>
+<script>
+    console.log("About page")
+</script>
 </body>
 </html>
