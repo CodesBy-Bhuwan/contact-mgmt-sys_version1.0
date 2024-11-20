@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th-replace="`{base::parent({::#content},~{::title},~{::script})}">
+<html lang="en" th-insert="~{index :: parent(~{::#content},~{::title},~{::script})}">
 <head>
     <title>Services</title>
 </head>

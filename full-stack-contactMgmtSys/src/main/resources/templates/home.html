@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" th-insert="~{index :: parent(~{::#content},~{::title},~{::script})}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>scm1.0</title>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" data-th-href="@{'/css/output.css'}" />
 </head>
 <body>
+    <div id="content"> 
+    <h1>Welcome to Home page</h1>
+</div>
     <div class="bg-gray-200 w-1/2 mx-auto mt-4 flex flex-col items-center">
         <h1 class="text-2 font-bold" data-th-text="${name}">Welcome to my page</h1>
         <p> Youtube Channel: <span th:text="${youtubeChannel}"></span></p>
