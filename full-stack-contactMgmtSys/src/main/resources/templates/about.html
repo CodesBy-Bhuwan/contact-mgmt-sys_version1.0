@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- th:replace will use "parent" fragment from "index" file -->
-<html lang="en" th:replace="~{index :: parent(`{::#content},~{::title},~{::script})}">
+<html lang="en" th-insert="~{index :: parent(~{::#content},~{::title},~{::script})}">
 <head>
     <title>About</title>
 </head>
