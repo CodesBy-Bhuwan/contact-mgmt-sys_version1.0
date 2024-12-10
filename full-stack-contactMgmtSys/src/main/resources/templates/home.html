@@ -3,16 +3,27 @@
     th-fragment id syntax for creating fragment-->
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+<<<<<<< HEAD
 th:replace="~{index :: parent(~{::#content},~{::title},~{::script})}">
 <head>
     <title>Home</title>
+=======
+      th-fragment="parent(content,titl,script)">
+<head>
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" data-th-href="@{'/css/output.css'}" />
+<!--    <title th:fragment="title"></title>-->
+    <title data-th-replace="${title}">Home</title>
+>>>>>>> 79b8cdf5b7bc0a2affc0839f33f66e319f29c02c
 </head>
 <body>
 <div></div>
 <section id="content">This is home page</section>
 
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
-<!-- <th:block data-th-replace="{script}"></th:block> -->
+<th:block data-th-replace="{script}"></th:block>
 <!--<footer th:insert="¬{index :: footer">This is footer of this tag</footer>-->
 </body>
 </html>
