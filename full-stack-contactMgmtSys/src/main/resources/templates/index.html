@@ -1,14 +1,20 @@
-<!DOCTYPE html>
-<!-- th:replace will use "parent" fragment from "index" file -->
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html lang="en"
+      th:fragment="parent(content,title,script)"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>About</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--    Title here-->
+    <title data-th-replace="${title}">Contact-MS</title>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" data-th-href="@{'/css/output.css'}" />
 </head>
 <body>
-<div id="content">
-    <h1>This is home page!</h1>
-</div>
+<section data-th-replace="${content}"></section>
 
-<!--<footer th:fragment="footer">This is footer tag for all html</footer>-->
+
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+<th:block data-th-replace="${script}"></th:block>
 </body>
 </html>
