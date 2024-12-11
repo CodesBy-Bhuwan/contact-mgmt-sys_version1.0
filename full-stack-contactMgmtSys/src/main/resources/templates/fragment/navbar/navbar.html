@@ -1,13 +1,15 @@
 <div th:fragment="navbar" xmlns:th="http://www.w3.org/1999/xhtml">
-<ul class="">
-  <li>
-    <a data-th-href="@{'/home'}">Home</a>
-  </li>
-  <li>
-    <a data-th-href="@{'/about'}">About</a>
-  </li>
-  <li>
-    <a data-th-href="@{'/services'}">Services</a>
-  </li>
-</ul>
+<!--<navbar data-th-replace="${navbar}">-->
+  <ul>
+    <li>
+      <a data-th-href="@{'/home'}">Home</a>
+    </li>
+    <li>
+      <a data-th-href="@{'/about'}">About</a>
+    </li>
+    <li>
+      <a data-th-href="@{'/services'}">Services</a>
+    </li>
+  </ul>
+<!--  <th:block data-th-replace="${navbar}"></th:block>-->
 </div>
