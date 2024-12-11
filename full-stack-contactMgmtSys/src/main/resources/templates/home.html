@@ -3,17 +3,17 @@
     th-fragment id syntax for creating fragment-->
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-th:replace="~{index :: parent(~{::#content},~{::title},~{::script})}">
+      th:replace="~{index :: parent(~{::#content},~{::title},~{::script})}">
 <head>
     <title>Home</title>
-<head>
-    <title data-th-replace="${title}">Home</title>
 </head>
 <body>
-<div></div>
+<div>
+
+</div>
 <section id="content">This is home page</section>
 
-<th:block data-th-replace="{script}"></th:block>
+<script>conslole.log("Home Page")</script>
 <!--<footer th:insert="¬{index :: footer">This is footer of this tag</footer>-->
 </body>
 </html>

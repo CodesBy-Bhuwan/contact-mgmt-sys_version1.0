@@ -11,10 +11,11 @@
     <link rel="stylesheet" data-th-href="@{'/css/output.css'}" />
 </head>
 <body>
-<section data-th-replace="${content}"></section>
+    <div th:replace="fragment/navbar/navbar::navbar"></div>
 
+<!--    <section data-th-replace="${content}"></section>-->
 
-<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
-<th:block data-th-replace="${script}"></th:block>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <th:block data-th-replace="${script}"></th:block>
 </body>
 </html>
