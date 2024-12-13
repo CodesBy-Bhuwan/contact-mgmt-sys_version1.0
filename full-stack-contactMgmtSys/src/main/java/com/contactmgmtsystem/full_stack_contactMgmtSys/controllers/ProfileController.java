@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ProfileController {
 
     @RequestMapping("/home")
-    public String home(Model model){
+    public String home(Model model) {
         System.out.println("Home page handler");
         model.addAttribute("name", "Bhuwan");
         model.addAttribute("Youtube Channel", "CodesByBhuwan");
@@ -17,15 +17,33 @@ public class ProfileController {
 
     // About Me
     @RequestMapping("/about")
-    public String aboutPage(){
+    public String aboutPage() {
         System.out.println("page loading");
         return "about";
     }
 
     // Service Page
     @RequestMapping("/services")
-    public String servicesPage(){
+    public String servicesPage() {
         System.out.println("services page loading");
         return "services";
     }
+
+    // Contact Page
+    @RequestMapping("/contact")
+    public String contactPage() {
+        System.out.println("contact page loading");
+        return new String("contact");
+    }
+
+    @RequestMapping("/login")
+    public String login(){
+        return new String ("fragment/in-up/login");
+    }
+
+    @RequestMapping("/register")
+    public String register(){
+        return new String ("fragment/in-up/register");
+    }
+
 }

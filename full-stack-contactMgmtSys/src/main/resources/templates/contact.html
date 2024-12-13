@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<!-- th:replace will use "parent" fragment from "index" file -->
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:insert="~{index :: parent(~{::#content},~{::title},~{::script})}">
+<head>
+    <title>Contact</title>
+</head>
+<body>
+<div id="content">
+    <h1>All Contact Here!</h1>
+</div>
+<script>
+    console.log("Contact page")
+</script>
+</body>
+</html>
