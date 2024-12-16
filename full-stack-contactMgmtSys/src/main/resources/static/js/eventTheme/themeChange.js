@@ -1,8 +1,28 @@
 console.log("Event Handler");
 
-let curretTheme = getTheme;
+let currentTheme = getTheme();
+changeTheme();
 
-function changeTheme(){}
+function changeTheme(){
+
+    document.querySelector("html").classList.add(currentTheme);
+
+    const changeButton = document.querySelector("#change_theme");
+    changeButton.addEventListener("click", (event)=>{
+        console.log("screen theme changed");
+
+        document.querySelector("html").classList.remove(currentTheme);
+
+        if(currentTheme=="dark"){
+            currentTheme = "light";
+        } else{
+            currentTheme= "dark";
+        }
+        document.querySelector("html").classList.add(currentTheme);
+
+    })
+}
+
 
 //setting theme to localStorage
 function setTheme(theme){
@@ -10,11 +30,8 @@ function setTheme(theme){
     }
 
 //getting theme from localStorage
-function getTheme(){
-    let theme = localStorage.getItem("theme");
-
-//    if(theme) return theme
-//        else return "light";
+function getTheme(theme){
+    localStorage.getItem("theme");
 
 //**************Using ternary operation
     return theme ? theme : "light";
