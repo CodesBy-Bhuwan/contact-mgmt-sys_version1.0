@@ -1,31 +1,42 @@
 console.log("Event Handler");
 
 let currentTheme = getTheme();
-changeTheme();
+/*
+This is the function that should be stimulated when we click the theme button
+Also once clicked it should stay for whole section/page/s 
+*/
+document.addEventListener("DOMContentLoaded", () =>{
+    changeTheme();
+})
+
+// changeTheme();
 
 function changeTheme(){
 
-    document.querySelector("html").classList.add(currentTheme);
+    // document.querySelector("html").classList.add(currentTheme);
+    changeThemePage(currentTheme, currentTheme);
 
     const changeButton = document.querySelector("#change_theme");
-    changeButton.addEventListener("click", (event)=>{
-        console.log("screen theme changed");
+        // This is to change the text_of_theme_button
+        // changeButton.querySelector("span").textContent=currentTheme=='light'?'Dark':'Light';
 
+        changeButton.addEventListener("click", (event)=>{
+        // console.log("screen theme changed");
+
+        // remove current theme
         document.querySelector("html").classList.remove(currentTheme);
 
-        if(currentTheme=="Dark"){
-            currentTheme = "Light";
+        if(currentTheme=="dark"){
+            currentTheme = "light";
         } else{
-            currentTheme= "Dark";
+            currentTheme= "dark";
         }
-        document.querySelector("html").classList.add(currentTheme);
+        // new theme or the same theme be added
 
-        // This is to change the text_of_theme_button
-        changeButton.querySelector("span").textContent=currentTheme=='Light'?'Dark':'Light';
-
+        changeThemePage(currentTheme, currentTheme);
+        
     })
 }
-
 
 //setting theme to localStorage
 function setTheme(theme){
@@ -37,7 +48,14 @@ function getTheme(theme){
     localStorage.getItem("theme");
 
 //**************Using ternary operation
-    return theme ? theme : "Light";
+    return theme ? theme : "dark";
+}
 
+/*  ############### Best Practice ############## 
+    Creating f/method for those line which are used more than once
+*/
+function changeThemePage(theme){
+    document.querySelector("html").classList.add(theme);
 
+    document.querySelector("#change_theme").querySelector("span").textContent=currentTheme=='light'?'Dark':'Light';
 }
