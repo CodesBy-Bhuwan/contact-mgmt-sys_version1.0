@@ -13,12 +13,15 @@ function changeTheme(){
 
         document.querySelector("html").classList.remove(currentTheme);
 
-        if(currentTheme=="dark"){
-            currentTheme = "light";
+        if(currentTheme=="Dark"){
+            currentTheme = "Light";
         } else{
-            currentTheme= "dark";
+            currentTheme= "Dark";
         }
         document.querySelector("html").classList.add(currentTheme);
+
+        // This is to change the text_of_theme_button
+        changeButton.querySelector("span").textContent=currentTheme=='Light'?'Dark':'Light';
 
     })
 }
@@ -34,7 +37,7 @@ function getTheme(theme){
     localStorage.getItem("theme");
 
 //**************Using ternary operation
-    return theme ? theme : "light";
+    return theme ? theme : "Light";
 
 
 }
