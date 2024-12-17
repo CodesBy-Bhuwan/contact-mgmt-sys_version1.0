@@ -1,10 +1,9 @@
 package com.contactmgmtsystem.full_stack_contactMgmtSys.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Contact {
@@ -26,4 +25,11 @@ public class Contact {
     private String webLink;
     private String facebookLink;
     // private List<String> socialLinks = new ArrayList<>();
+
+    @ManyToOne
+    private User user;
+
+//    Mapping contact with socialLink
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<SocialLink> socialLinks = new ArrayList<>();
 }
