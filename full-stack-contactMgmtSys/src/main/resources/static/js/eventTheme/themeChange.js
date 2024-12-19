@@ -22,6 +22,7 @@ function changeTheme(){
 
         changeButton.addEventListener("click", (event)=>{
         // console.log("screen theme changed");
+        let oldTheme = currentTheme;
 
         // remove current theme
         document.querySelector("html").classList.remove(currentTheme);
@@ -33,7 +34,7 @@ function changeTheme(){
         }
         // new theme or the same theme be added
 
-        changeThemePage(currentTheme, currentTheme);
+        changeThemePage(currentTheme, oldTheme);
         
     })
 }
