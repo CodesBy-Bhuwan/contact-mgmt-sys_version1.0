@@ -11,14 +11,18 @@
     <title data-th-replace="${title}">Contact-MS</title>
 <!--    flowbite-->
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
-    <link rel="stylesheet" data-th-href="@{'/css/output.css'}" />
+    <!-- path for tailwindcss -->
+    <link rel="stylesheet" data-th-href="@{'static/css/output.css'}" />
 <!--    fontawesome-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" 
+    integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" 
+    crossorigin="anonymous" 
+    referrerpolicy="no-referrer" />
 
 </head>
 <body class="dark:bg-gray-800 dark:text-white">
     <!-- This is for navbar -->
-<div data-th-replace="fragment/navbar/navbar::navbar"></div>
+<navbar data-th-insert="fragment/navbar/navbar::navbar"></navbar>
 
 <!-- This is for other boby component -->
 <div class="p-6">
