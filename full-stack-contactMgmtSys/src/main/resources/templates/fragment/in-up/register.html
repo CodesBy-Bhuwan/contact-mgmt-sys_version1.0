@@ -24,7 +24,11 @@
                     </p>
 
                     <!-- Area to enter data -->
-                     <form action="" class="mt-5">
+                     <!-- This is the form that shows us registratrion page
+                    1). This action properties facilitates us that where to send/where it get submitted the url or data
+                    2). This method properties means these data won't go to the url but to the request-body
+                         -->
+                     <form data-th-action="@{'/do-register'}" method="post" class="mt-5">
                         
                         <!-- Name Field -->
                         <div class="mb-3">
