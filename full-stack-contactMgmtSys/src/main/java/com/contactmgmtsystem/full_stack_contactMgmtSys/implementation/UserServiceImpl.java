@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.contactmgmtsystem.full_stack_contactMgmtSys.entities.User;
+import com.contactmgmtsystem.full_stack_contactMgmtSys.helper.ResourceNotFoundException;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.repository.UserRepo;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.services.UserServices;
 
@@ -36,9 +37,25 @@ public class UserServiceImpl implements UserServices {
     }
 
     @Override
-    public Optional<User> updatUser(User user) {
+    public Optional<User> updateUser(User user) {
         
-        userRepo.findById(user.getUserId()).orElseThrow(()-> new ResourceNotFoundException());
+        User user2=userRepo.findById(user.getUserId()).orElseThrow(()-> new ResourceNotFoundException("User Not Found"));
+        // Now we have to update user2 with user
+        user2.setName(user.getName());
+        user2.setEmail(user.getEmail());
+        user2.setPassword(user.getPassword());
+        user2.setAbout(user.getAbout());
+        user2.setPhoneNumber(user.getPhoneNumber());
+        user2.setProfilePic(user.getProfilePic());
+        user2.setEnabled(user.isEnabled());
+        user2.setEmailVerified(user.isEmailVerified());
+        user2.setPhoneNumberVerified(user.isPhoneNumberVerified());
+        user2.setProviders(user.getProviders());
+        user2.setProviderUserId(user.getProviderUserId());
+
+        // Now these data has to be saved in db
+        User save = userRepo.save(user2);
+        return Optional.ofNullable(save);
     }
 
     @Override
