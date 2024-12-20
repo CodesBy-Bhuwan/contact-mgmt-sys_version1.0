@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.contactmgmtsystem.full_stack_contactMgmtSys.forms.UserForm;
+
 @Controller
 public class ProfileController {
 
@@ -43,7 +45,13 @@ public class ProfileController {
     }
 
     @RequestMapping("/register")
-    public String register(){
+    public String register(Model model){
+
+        UserForm userForm = new UserForm();
+        /* To assign default value
+        userForm.setName("MyName");
+         */
+        model.addAttribute("userForm", userForm);
         return new String ("fragment/in-up/register");
     }
 
