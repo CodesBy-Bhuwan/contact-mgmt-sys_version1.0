@@ -60,8 +60,10 @@ public class UserServiceImpl implements UserServices {
 
     @Override
     public void deleteUser(String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+        // To deleteUser we need to fetch the data first, here we will fetch the data using id(primary key)
+        User user2=userRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("User Not Found"));
+        userRepo.delete(user2);
+
     }
 
     @Override
