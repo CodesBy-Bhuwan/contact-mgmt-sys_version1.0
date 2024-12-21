@@ -2,6 +2,7 @@ package com.contactmgmtsystem.full_stack_contactMgmtSys.implementation;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,9 @@ public class UserServiceImpl implements UserServices {
 
     @Override
     public User saveUser(User user) {
+        // Before saving we need to generate dynamic user id
+        String userId = UUID.randomUUID().toString();
+        user.setUserId(userId);
         return userRepo.save(user);
     }
 
