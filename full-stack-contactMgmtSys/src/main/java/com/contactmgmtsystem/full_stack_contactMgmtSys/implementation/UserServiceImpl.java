@@ -74,14 +74,15 @@ public class UserServiceImpl implements UserServices {
 
     @Override
     public boolean isUSerExistByEmail(String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isUSerExistByEmail'");
+        // We can use custom find methods for that we will make optional method in UserRepo to find User using Email
+        User user = userRepo.findByEmail(email).orElse(null);
+        return user!=null ? true : false;
     }
 
     @Override
     public List<User> getAllUsers() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllUsers'");
+        // To find all the users we can use findAll() mehtod
+        return userRepo.findAll();
     }
 
 
