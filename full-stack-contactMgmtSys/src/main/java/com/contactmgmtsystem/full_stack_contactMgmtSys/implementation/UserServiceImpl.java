@@ -68,8 +68,8 @@ public class UserServiceImpl implements UserServices {
 
     @Override
     public boolean isUserExist(String userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isUserExist'");
+        User user2=userRepo.findById(userId).orElse(null);
+        return user2!=null ? true : false;
     }
 
     @Override
