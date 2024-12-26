@@ -32,7 +32,11 @@ public class UserServiceImpl implements UserServices {
         // Before saving we need to generate dynamic user id
         String userId = UUID.randomUUID().toString();
         user.setUserId(userId);
+
+
+//        user.setProfilePic("userId");
         return userRepo.save(user);
+
     }
 
     @Override
