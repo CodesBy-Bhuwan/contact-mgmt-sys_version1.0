@@ -1,5 +1,6 @@
 package com.contactmgmtsystem.full_stack_contactMgmtSys.controllers;
 
+import com.contactmgmtsystem.full_stack_contactMgmtSys.services.UserServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,8 @@ import com.contactmgmtsystem.full_stack_contactMgmtSys.forms.UserForm;
 
 @Controller
 public class RegisterController {
+
+    private UserServices userServices;
 
  // Processing register
     @RequestMapping(value="/do-register", method = RequestMethod.POST)
@@ -21,6 +24,7 @@ public class RegisterController {
  4). Message if needed 
  5). Redirect to login page
 */
+        userServices.saveUser();
         System.out.println(userForm);
         return "redirect:/register";
     }
