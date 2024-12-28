@@ -1,9 +1,11 @@
 package com.contactmgmtsystem.full_stack_contactMgmtSys.controllers;
 
+import com.contactmgmtsystem.full_stack_contactMgmtSys.entities.User;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -60,6 +62,9 @@ public class ProfileController {
         return new String ("fragment/in-up/register");
     }
 
-   
 
 }
+
+
+
+

@@ -17,7 +17,7 @@ public interface UserRepo extends JpaRepository<User, String> {
     Optional<User>findByEmail(String email);
 
     /*In case of creating such optional method to find User using 2 arguments:
-    Eg.: Using Email and Password
-    Optional<User>findByEmailAndPassword(String email, String password); */
+    Eg.: Using Email and Password*/
+    Optional<User>findByEmailAndPassword(String email, String password);
 
 }
