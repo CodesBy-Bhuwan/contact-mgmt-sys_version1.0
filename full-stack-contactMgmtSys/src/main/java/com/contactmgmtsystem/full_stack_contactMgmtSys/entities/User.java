@@ -41,7 +41,8 @@ public class User {
     private boolean phoneNumberVerified = false;
 
     /* If user signed/logged from other sources 
-    like: GOOGLE, LINKEDIN, FACEBOOK, GITHUB... */ 
+    like: GOOGLE, LINKEDIN, FACEBOOK, GITHUB... */
+    @Enumerated
     private  Providers providers=Providers.SELF;
     private String providerUserId;
 
