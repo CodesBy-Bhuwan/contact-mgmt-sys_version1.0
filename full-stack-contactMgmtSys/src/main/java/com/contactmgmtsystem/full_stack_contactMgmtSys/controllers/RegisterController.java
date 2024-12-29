@@ -3,6 +3,7 @@ package com.contactmgmtsystem.full_stack_contactMgmtSys.controllers;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.entities.User;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.forms.UserForm;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.services.UserServices;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,7 @@ public class RegisterController {
 
 //  Processing register
     @RequestMapping(value="/do-register", method = RequestMethod.POST)
-    public String processRegister(@ModelAttribute UserForm userForm){
+    public String processRegister(@ModelAttribute UserForm userForm, HttpSession session) {
         System.out.println("procseeing registraiton");
 /*  Steps to follow for the registration:
  1). Fetch the data or Input from the form
@@ -51,7 +52,10 @@ public class RegisterController {
 
         User saveUser = userServices.saveUser(user);
 //        System.out.println(userForm);   tested
-        System.out.println("saved user");
+//        System.out.println("saved user");
+
+//      adding message when data is input in sign-up/registration form
+        session.setAttribute("message", "Registeration Successfully");
         return "redirect:/register";
     }
 }
