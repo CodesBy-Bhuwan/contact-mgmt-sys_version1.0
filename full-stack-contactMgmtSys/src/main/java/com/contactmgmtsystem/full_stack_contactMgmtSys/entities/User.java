@@ -42,7 +42,7 @@ public class User {
 
     /* If user signed/logged from other sources 
     like: GOOGLE, LINKEDIN, FACEBOOK, GITHUB... */
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     private  Providers providers=Providers.SELF;
     private String providerUserId;
 
