@@ -13,4 +13,7 @@
         role="alert">
 <!--    <span class="font-medium">Success alert!</span>-->
     <span data-th-text="*{content}"></span>
+
+<!--    This will call the sessionHelper from SessionHelper and run removeMessage funtion to remove the message after the registration is done and new registration is opened-->
+    <th:block data-th-text="${@sessionHelper.removeMessage()}"></th:block>
 </div>
