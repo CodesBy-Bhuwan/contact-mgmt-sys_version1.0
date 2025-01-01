@@ -2,6 +2,8 @@ package com.contactmgmtsystem.full_stack_contactMgmtSys.controllers;
 
 import com.contactmgmtsystem.full_stack_contactMgmtSys.entities.User;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.forms.UserForm;
+import com.contactmgmtsystem.full_stack_contactMgmtSys.message.Message;
+import com.contactmgmtsystem.full_stack_contactMgmtSys.message.MessageType;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.services.UserServices;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,9 +55,11 @@ public class RegisterController {
         User saveUser = userServices.saveUser(user);
 //        System.out.println(userForm);   tested
 //        System.out.println("saved user");
+//        Message will be shown after successful registration. using enum MessageYpe.green means in green color
+        Message message = Message.builder().content("Registered successfully").type(MessageType.green).build();
 
 //      adding message when data is input in sign-up/registration form
-        session.setAttribute("message", "Registeration Successfully");
+        session.setAttribute("message", message);
         return "redirect:/register";
     }
 }
