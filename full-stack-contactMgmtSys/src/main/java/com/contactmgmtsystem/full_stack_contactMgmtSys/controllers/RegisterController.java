@@ -24,6 +24,7 @@ public class RegisterController {
 //  Processing register
     @RequestMapping(value="/do-register", method = RequestMethod.POST)
     public String processRegister(@Valid @ModelAttribute UserForm userForm, BindingResult rBindingResult, HttpSession session) {
+//        BindingResult will notify if error
         System.out.println("procseeing registraiton");
 /*  Steps to follow for the registration:
  1). Fetch the data or Input from the form
@@ -57,9 +58,9 @@ public class RegisterController {
         user.setProfilePic("https://t4.ftcdn.net/jpg/07/08/47/75/360_F_708477508_DNkzRIsNFgibgCJ6KoTgJjjRZNJD4mb4.jpg");
 
 
-        User saveUser = userServices.saveUser(user);
+        User savedUser = userServices.saveUser(user);
 //        System.out.println(userForm);   tested
-//        System.out.println("saved user");
+        System.out.println("saved user");
 //        Message will be shown after successful registration. using enum MessageYpe.green means in green color
         Message message = Message.builder().content("Registered successfully").type(MessageType.green).build();
 
