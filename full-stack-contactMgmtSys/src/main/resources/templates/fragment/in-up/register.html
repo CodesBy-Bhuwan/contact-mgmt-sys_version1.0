@@ -54,7 +54,7 @@
                          <p
                                  data-th-if="${#fields.hasErrors('name')}"
                                  data-th-errors="*{name}"
-                                 class="text-red-600 px-1 py-2"> Name is required</p>
+                                 class="text-red-600 px-1 py-2"></p>
                         </div>
 
                         <!-- Email Field -->
@@ -63,10 +63,14 @@
                             for="email" 
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                             <input 
-                            type="email" 
-                            id="email" 
+                            type="email"
+                            id="email"
                             data-th-field="*{email}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@email.com" required />
+                            <p
+                                    data-th-if="${#fields.hasErrors('email')}"
+                                    data-th-errors="*{email}"
+                                    class="text-red-600 px-1 py-2"></p>
                         </div>
 
                         <!-- Password Field -->
@@ -79,6 +83,10 @@
                             id="password" 
                             data-th-field="*{password}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="***********" required />
+                            <p
+                                    data-th-if="${#fields.hasErrors('password')}"
+                                    data-th-errors="*{password}"
+                                    class="text-red-600 px-1 py-2"></p>
                         </div>
 
                         <!-- PhoneNumber Field -->
@@ -91,6 +99,10 @@
                             id="phone" 
                             data-th-field="*{PhoneNumber}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                            <p
+                                    data-th-if="${#fields.hasErrors('phone')}"
+                                    data-th-errors="*{phone}"
+                                    class="text-red-600 px-1 py-2"></p>
                         </div>
 
                         <!-- About Text Field -->
@@ -102,6 +114,10 @@
                             rows="6" 
                             data-th-field="*{about}"
                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write Here..."></textarea>
+                            <p
+                                    data-th-if="${#fields.hasErrors('about')}"
+                                    data-th-errors="*{about}"
+                                    class="text-red-600 px-1 py-2"></p>
 
                         </div>
 
