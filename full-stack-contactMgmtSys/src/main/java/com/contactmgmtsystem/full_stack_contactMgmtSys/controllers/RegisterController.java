@@ -6,9 +6,11 @@ import com.contactmgmtsystem.full_stack_contactMgmtSys.message.Message;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.message.MessageType;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.services.UserServices;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,7 +25,7 @@ public class RegisterController {
 
 //  Processing register
     @RequestMapping(value="/do-register", method = RequestMethod.POST)
-    public String processRegister(@ModelAttribute UserForm userForm, HttpSession session) {
+    public String processRegister(@Valid @ModelAttribute UserForm userForm, BindingResult rBindingResult, HttpSession session) {
         System.out.println("procseeing registraiton");
 /*  Steps to follow for the registration:
  1). Fetch the data or Input from the form
@@ -32,6 +34,11 @@ public class RegisterController {
  4). Message if needed
  5). Redirect to login page
 */
+//        For Validation
+        if(rBindingResult.hasErrors()){
+            return "register";
+        }
+
         /*
     User user = User.builder()
             .name(userForm.getName())
