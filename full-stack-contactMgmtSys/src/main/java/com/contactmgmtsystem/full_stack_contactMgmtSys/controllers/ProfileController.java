@@ -59,7 +59,7 @@ public class ProfileController {
         userForm.setName("MyName");
          */
         model.addAttribute("userForm", userForm);
-        return new String ("fragment/in-up/register");
+        return "fragment/in-up/register";
     }
 
 
