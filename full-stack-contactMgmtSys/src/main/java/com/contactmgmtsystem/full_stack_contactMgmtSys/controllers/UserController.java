@@ -21,6 +21,15 @@ public class UserController {
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 //    In RequestMethod default method is GET
     public String userDashboard(){
+        System.out.println("This is userDashboard");
         return "user/Dashboard";
+    }
+
+
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+//    In RequestMethod default method is GET
+    public String userProfile(){
+        System.out.println("This is userProfile");
+        return "user/Profile";
     }
 }
