@@ -22,7 +22,7 @@ public class UserController {
 //    In RequestMethod default method is GET
     public String userDashboard(){
         System.out.println("This is userDashboard");
-        return "user/Dashboard";
+        return "user/dashboard";
     }
 
 
@@ -30,6 +30,6 @@ public class UserController {
 //    In RequestMethod default method is GET
     public String userProfile(){
         System.out.println("This is userProfile");
-        return "user/Profile";
+        return "user/profile";
     }
 }
