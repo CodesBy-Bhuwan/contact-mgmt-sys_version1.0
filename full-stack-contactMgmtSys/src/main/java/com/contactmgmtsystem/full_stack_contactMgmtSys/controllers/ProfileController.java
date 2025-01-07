@@ -14,9 +14,6 @@ import com.contactmgmtsystem.full_stack_contactMgmtSys.forms.UserForm;
 @Controller
 public class ProfileController {
 
-    @Autowired
-    private UserServices userServices;
-
     @RequestMapping("/home")
     public String home(Model model) {
         System.out.println("Home page handler");
