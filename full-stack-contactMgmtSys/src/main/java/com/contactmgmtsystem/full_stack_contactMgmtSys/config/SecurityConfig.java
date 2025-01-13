@@ -1,6 +1,8 @@
 package com.contactmgmtsystem.full_stack_contactMgmtSys.config;
 
 
+import com.contactmgmtsystem.full_stack_contactMgmtSys.services.SecurityCustomUserDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -43,13 +45,16 @@ public class SecurityConfig {
     }
     */
 
+    @Autowired
+    private SecurityCustomUserDetailService customUserDetailService;
+
 //   For each User or admin or guest can access with their own username and password and nobody can access other info without permission
     @Bean
-    public AuthenticationProvider authenticationProvieder(UserDetailsPasswordService userDetailsPasswordService){
+    public DaoAuthenticationProvider authenticationProvieder(){
 
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 //      Need to pass UserDetailsService Object
-        daoAuthenticationProvider.setUserDetailsService(null);
+        daoAuthenticationProvider.setUserDetailsService(customUserDetailService);
 //      Need to pass PasswordEncoder Object
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
 
