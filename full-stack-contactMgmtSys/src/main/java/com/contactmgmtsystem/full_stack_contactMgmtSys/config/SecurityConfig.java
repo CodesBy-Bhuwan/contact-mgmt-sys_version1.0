@@ -14,19 +14,34 @@ public class SecurityConfig {
 //    user create and login dynamically using java code with memory service
 //    private InMemoryUserDetailsManager inMemoryUserDetailsManager;
 
+    /*
+   #########This bean shows how we can assign univeral or default username and password for everyUser
+
     @Bean
     public UserDetailsService userDetailsService() {
-/* Things to remember: This User is imported from spring.security
-        We can also assign role for each member: user, client, admin or guest
-        */
+// Things to remember: This User is imported from spring.security
+//        We can also assign role for each member: user, client, admin or guest
+
+
         UserDetails user1 = User
-                .withUsername("root")
+                .withDefaultPasswordEncoder()
+                .username("root")
                 .password("root")
                 .roles("ADMIN", "USER")
                 .build();
 
-        var inMemoryUserDetailsManger = new InMemoryUserDetailsManager(user1);
+        UserDetails user2 = User
+                .withDefaultPasswordEncoder()
+                .username("admin")
+                .password("admin")
+                .roles("Guest")
+                .build();
+
+        var inMemoryUserDetailsManger = new InMemoryUserDetailsManager(user1, user2);
         return inMemoryUserDetailsManger;
     }
+    */
+
+//   
 
 }
