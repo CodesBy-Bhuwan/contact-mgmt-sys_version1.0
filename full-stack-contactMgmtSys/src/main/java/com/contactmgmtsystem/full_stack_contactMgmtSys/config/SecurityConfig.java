@@ -3,8 +3,11 @@ package com.contactmgmtsystem.full_stack_contactMgmtSys.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
@@ -42,6 +45,20 @@ public class SecurityConfig {
     }
     */
 
-//   
+//   For each User or admin or guest can access with their own username and password and nobody can access other info without permission
+    @Bean
+    public AuthenticationProvider authenticationProvieder(UserDetailsPasswordService userDetailsPasswordService){
+
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+//      Need to pass UserDetailsService Object
+        daoAuthenticationProvider.setUserDetailsService(null);
+//      Need to pass PasswordEncoder Object
+        daoAuthenticationProvider.setPasswordEncoder(null);
+
+
+        return daoAuthenticationProvider;
+    }
+
+
 
 }
