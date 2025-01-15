@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.contactmgmtsystem.full_stack_contactMgmtSys.entities.User;
@@ -21,6 +22,8 @@ public class UserServiceImpl implements UserServices {
     @Autowired
     private UserRepo userRepo;
 
+    private PasswordEncoder passwordEncoder;
+
     // With property-injection we can also use constructor-injection for that we will create parameterized constructor
 
 
@@ -33,8 +36,11 @@ public class UserServiceImpl implements UserServices {
         String userId = UUID.randomUUID().toString();
         user.setUserId(userId);
 
+//        password encoder
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-//        user.setProfilePic("userId");
+        user.setRoleList((List.of("ROLE_USER")));
+
         return userRepo.save(user);
 
     }
