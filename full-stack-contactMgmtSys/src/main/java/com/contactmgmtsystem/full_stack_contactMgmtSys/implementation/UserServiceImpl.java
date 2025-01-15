@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.contactmgmtsystem.full_stack_contactMgmtSys.helper.AppConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,8 @@ public class UserServiceImpl implements UserServices {
 //        password encoder
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        user.setRoleList((List.of("ROLE_USER")));
-
+        user.setRoleList((List.of(AppConst.ROLE_USER)));
+        
         return userRepo.save(user);
 
     }
