@@ -41,7 +41,8 @@ public class UserServiceImpl implements UserServices {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         user.setRoleList((List.of(AppConst.ROLE_USER)));
-        
+
+        logger.info(user.getProviders().toString());
         return userRepo.save(user);
 
     }
