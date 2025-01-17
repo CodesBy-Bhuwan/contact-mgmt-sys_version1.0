@@ -7,9 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
@@ -47,8 +50,10 @@ public class SecurityConfig {
 
     @Autowired
     private SecurityCustomUserDetailService customUserDetailService;
+    @Autowired
+    private HttpSecurity httpSecurity;
 
-//   For each User or admin or guest can access with their own username and password and nobody can access other info without permission
+    //   For each User or admin or guest can access with their own username and password and nobody can access other info without permission
     @Bean
     public DaoAuthenticationProvider authenticationProvieder(){
 
@@ -60,6 +65,22 @@ public class SecurityConfig {
 
 
         return daoAuthenticationProvider;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+
+//        Configuration
+        httpSecurity.authorizeRequests(authorize->{
+//            authorize.requestMatchers("/home","/register","/services").permitAll(); this will authorize without login
+            authorize.requestMatchers("/user/**").authenticated(); //url starting with /user will authorize
+            authorize.anyRequest().permitAll();//other request will require authorization
+
+        });
+//this is default login || if any changes has to be made related to form-login then it is done through this customizer
+        httpSecurity.formLogin(Customizer.withDefaults());
+
+        return httpSecurity.build();
     }
 
 //    Creating Bean just to produce object for above daoAuthenticaitonProvider
