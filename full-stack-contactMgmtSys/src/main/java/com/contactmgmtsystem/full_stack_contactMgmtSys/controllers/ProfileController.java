@@ -10,9 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.contactmgmtsystem.full_stack_contactMgmtSys.forms.UserForm;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ProfileController {
+
+    @RequestMapping(value = "/")
+    public String index() {
+        return "redirect:/home";
+    }
 
     @RequestMapping("/home")
     public String home(Model model) {
