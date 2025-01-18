@@ -11,11 +11,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import java.io.IOException;
 
@@ -103,6 +105,16 @@ public class SecurityConfig {
                                                     AuthenticationException exception) throws IOException, ServletException {
 
                     throw new UnsupportedOperationException("Unimplemented method 'onAuthenticationFailure'");
+
+                }
+            });
+            fromLogin.successHandler(new AuthenticationSuccessHandler() {
+
+                @Override
+                public void onAuthenticationSuccess(HttpServletRequest request,
+                                                    HttpServletResponse response,
+                                                    Authentication authentication) throws IOException, ServletException {
+                    throw new UnsupportedOperationException("Unimplemented method 'onAuthenticationSuccess'");
 
                 }
             });
