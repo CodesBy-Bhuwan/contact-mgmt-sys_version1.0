@@ -1,10 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- th:replace will use "parent" fragment from "index" file -->
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:insert="~{index :: parent(~{::#content},~{::title},~{::script})}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login</title>
 </head>
 <body>
+<div id="content">
+    <h1>Please Login Here!</h1>
+    <div class="flex justify-center">
+        <!-- <div class="grid grid-cols-12"> -->
+        <div class="col-span-6 md:col-span-2 xl:col-span-4 lg:col-span-3" > </div>
+        <div class="col-span-12 md:col-span-8 xl:col-span-4 lg:col-span-6">
+            <!-- <h1>Here is registration form</h1> -->
 
+            <!--            Alert Message-->
+            <div data-th-replace="fragment/message/alertMessage::alertMessage"></div>
+            <!-- Card-->
+            <div
+                    class="block p-6 border-t-[10px] border-blue-800 bg-white rounded-xl shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-blue-700 dark:hover:bg-gray-700">
+
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Login Here!!!</h5>
+                <p class="font-normal text-gray-400 dark:text-gray-400">You are supposed to login using your username and password.
+                </p>
+
+                <!-- Area to enter data -->
+                <!-- This is the form that shows us registratrion page
+               1). This action properties facilitates us that where to send/where it get submitted the url or data
+               2). This method properties means these data won't go to the url but to the request-body
+                    -->
+                <form
+                        data-th-action="@{'/do-register'}"
+                        method="post"
+                        data-th-object="${userForm}"
+                        class="mt-5"
+                        novalidate>
+
+
+                    <!-- 1). data-th-object: now we can use the properties of userForm object directly in the field below
+                       2). data-th-field: to use the specific entity this comes form the data-th-object-->
+
+                    <!-- Name Field -->
+
+
+                    <!-- Email Field -->
+                    <div class="mb-3">
+                        <label
+                                for="email"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                        <input
+                                type="email"
+                                id="email"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@email.com" required />
+<!--                        <p-->
+<!--                                data-th-if="${#fields.hasErrors('email')}"-->
+<!--                                data-th-errors="*{email}"-->
+<!--                                class="text-red-600 px-1 py-2"></p>-->
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-5">
+                        <label
+                                for="Password"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                        <input
+                                type="password"
+                                id="password"
+
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="***********" required />
+<!--                        <p-->
+<!--                                data-th-if="${#fields.hasErrors('password')}"-->
+<!--                                data-th-errors="*{password}"-->
+<!--                                class="text-red-600 px-1 py-2"></p>-->
+                    </div>
+
+                    <!-- Button Section -->
+                    <div class="mb-3 flex justify-center gap-2">
+                        <!-- Sign Up button -->
+                        <!-- data-th-href="#" -->
+                        <button
+                                type="submit"
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
+
+                        <!-- Reset button -->
+                        <!--                            <button  -->
+                        <!--                            type="reset" -->
+                        <!--                            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Reset</button>-->
+
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    console.log("Login Page")
+</script>
 </body>
 </html>
