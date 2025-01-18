@@ -2,17 +2,22 @@ package com.contactmgmtsystem.full_stack_contactMgmtSys.config;
 
 
 import com.contactmgmtsystem.full_stack_contactMgmtSys.services.SecurityCustomUserDetailService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsPasswordService;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+
+import java.io.IOException;
 
 @Configuration
 public class SecurityConfig {
@@ -50,8 +55,7 @@ public class SecurityConfig {
 
     @Autowired
     private SecurityCustomUserDetailService customUserDetailService;
-    @Autowired
-    private HttpSecurity httpSecurity;
+
 
     //   For each User or admin or guest can access with their own username and password and nobody can access other info without permission
     @Bean
@@ -78,7 +82,21 @@ public class SecurityConfig {
 
         });
 //this is default login || if any changes has to be made related to form-login then it is done through this customizer
-        httpSecurity.formLogin(Customizer.withDefaults());
+        httpSecurity.formLogin(fromLogin->{
+/*           Here instead of using SpringSecurity Login page we can use our customized login form by passing login URL
+            fromLogin.loginPage("/login")
+                    .loginProcessingUrl("/authenticate");
+                    This chain will use our login page but processing and submission will be in authentiacte page
+                    */
+//            This is normal practice but chaining method is widely used
+            fromLogin.loginPage("/login");
+            fromLogin.loginProcessingUrl("/authenticate");
+            fromLogin.successForwardUrl("/user/dashboard");
+            fromLogin.failureUrl("/login?error=true");
+            fromLogin.usernameParameter("email"); //This will make our username in login page be email instead of username
+            fromLogin.passwordParameter("password");
+            
+        });
 
         return httpSecurity.build();
     }
