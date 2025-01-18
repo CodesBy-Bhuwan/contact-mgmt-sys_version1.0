@@ -95,7 +95,18 @@ public class SecurityConfig {
             fromLogin.failureUrl("/login?error=true");
             fromLogin.usernameParameter("email"); //This will make our username in login page be email instead of username
             fromLogin.passwordParameter("password");
-            
+//            Handling if failure is occured
+            fromLogin.failureHandler(new AuthenticationFailureHandler() {
+                @Override
+                public void onAuthenticationFailure(HttpServletRequest request,
+                                                    HttpServletResponse response,
+                                                    AuthenticationException exception) throws IOException, ServletException {
+
+                    throw new UnsupportedOperationException("Unimplemented method 'onAuthenticationFailure'");
+
+                }
+            });
+
         });
 
         return httpSecurity.build();
