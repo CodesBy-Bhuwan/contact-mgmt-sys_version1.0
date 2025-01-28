@@ -5,6 +5,7 @@ import com.contactmgmtsystem.full_stack_contactMgmtSys.services.SecurityCustomUs
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -69,6 +70,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
 //        Configuration
+//        How route is done??
         httpSecurity.authorizeRequests(authorize->{
 //            authorize.requestMatchers("/home","/register","/services").permitAll(); this will authorize without login
             authorize.requestMatchers("/user/**").authenticated(); //url starting with /user will authorize
@@ -116,8 +118,8 @@ public class SecurityConfig {
 //        When user want or will get loggedout.
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity.logout(logoutForm->{
-            logoutForm.logoutUrl("/logout");
-            logoutForm.logoutSuccessUrl("/login?logout=true");
+            logoutForm.logoutUrl("/do-logout");
+//            logoutForm.logoutSuccessUrl("/login?logout=true");
         });
 
         return httpSecurity.build();

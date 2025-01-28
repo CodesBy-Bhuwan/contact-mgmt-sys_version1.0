@@ -33,7 +33,7 @@ public class ProfileController {
     }
 
     // Service Page
-    @GetMapping("/services")
+    @RequestMapping("/services")
     public String servicesPage() {
         System.out.println("services page loading");
         return "services";
@@ -50,6 +50,14 @@ public class ProfileController {
     public String login(){
         return new String ("fragment/in-up/login");
     }
+    @PostMapping("/login")
+    public String loginSubmit(){
+        return new String ("fragment/in-up/login");
+    }
+
+//    @PostMapping("/login")
+//    public String loginSubmit(@ModelAttribute("userForm") UserForm userForm){}
+
 
     @GetMapping("/register")
     public String register(Model model){

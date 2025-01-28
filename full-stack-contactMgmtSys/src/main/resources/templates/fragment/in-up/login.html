@@ -25,6 +25,11 @@
                 <p class="font-normal text-gray-400 dark:text-gray-400">You are supposed to login using your username and password.
                 </p>
 
+                <div class="text-red-400" th:if="${param.error}">
+                    Invalid username and password.
+                </div>
+                <div class="text-green-400" th:if="${param.logout}">You have been logged-out.</div>
+
                 <!-- Area to enter data -->
                 <!-- This is the form that shows us registratrion page
                1). This action properties facilitates us that where to send/where it get submitted the url or data
@@ -33,9 +38,8 @@
                 <form
                         data-th-action="@{'/authenticate'}"
                         method="post"
-                        data-th-object="${userForm}"
                         class="mt-5"
-                        novalidate>
+                        >
                     <!-- 1). data-th-object: now we can use the properties of userForm object directly in the field below
                        2). data-th-field: to use the specific entity this comes form the data-th-object-->
 
