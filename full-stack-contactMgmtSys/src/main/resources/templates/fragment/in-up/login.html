@@ -31,25 +31,22 @@
                2). This method properties means these data won't go to the url but to the request-body
                     -->
                 <form
-                        data-th-action="@{'/do-register'}"
+                        data-th-action="@{'/authenticate'}"
                         method="post"
                         data-th-object="${userForm}"
                         class="mt-5"
                         novalidate>
-
-
                     <!-- 1). data-th-object: now we can use the properties of userForm object directly in the field below
                        2). data-th-field: to use the specific entity this comes form the data-th-object-->
 
                     <!-- Name Field -->
-
-
                     <!-- Email Field -->
                     <div class="mb-3">
                         <label
                                 for="email"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                         <input
+                                name="email"
                                 type="email"
                                 id="email"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@email.com" required />
@@ -65,6 +62,7 @@
                                 for="Password"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                         <input
+                                name="password"
                                 type="password"
                                 id="password"
 

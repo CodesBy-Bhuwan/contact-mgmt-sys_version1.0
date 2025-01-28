@@ -23,7 +23,9 @@ public class UserServiceImpl implements UserServices {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
 
     // With property-injection we can also use constructor-injection for that we will create parameterized constructor
 

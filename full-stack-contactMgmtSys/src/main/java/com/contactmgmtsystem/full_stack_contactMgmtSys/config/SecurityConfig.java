@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -75,19 +76,19 @@ public class SecurityConfig {
 
         });
 //this is default login || if any changes has to be made related to form-login then it is done through this customizer
-        httpSecurity.formLogin(fromLogin->{
+        httpSecurity.formLogin(formLogin->{
 /*           Here instead of using SpringSecurity Login page we can use our customized login form by passing login URL
             fromLogin.loginPage("/login")
                     .loginProcessingUrl("/authenticate");
                     This chain will use our login page but processing and submission will be in authentiacte page
                     */
 //            This is normal practice but chaining method is widely used
-            fromLogin.loginPage("/login");
-            fromLogin.loginProcessingUrl("/authenticate");
-            fromLogin.successForwardUrl("/user/dashboard");
-            fromLogin.failureUrl("/login?error=true");
-            fromLogin.usernameParameter("email"); //This will make our username in login page be email instead of username
-            fromLogin.passwordParameter("password");
+            formLogin.loginPage("/login");
+            formLogin.loginProcessingUrl("/authenticate");
+            formLogin.successForwardUrl("/user/dashboard");
+//            formLogin.failureUrl("/login?error=true");
+            formLogin.usernameParameter("email"); //This will make our username in login page be email instead of username
+            formLogin.passwordParameter("password");
 /*            Handling if failure is occured
             fromLogin.failureHandler(new AuthenticationFailureHandler() {
                 @Override
@@ -111,6 +112,12 @@ public class SecurityConfig {
             });
             */
 
+        });
+//        When user want or will get loggedout.
+        httpSecurity.csrf(AbstractHttpConfigurer::disable);
+        httpSecurity.logout(logoutForm->{
+            logoutForm.logoutUrl("/logout");
+            logoutForm.logoutSuccessUrl("/login?logout=true");
         });
 
         return httpSecurity.build();
