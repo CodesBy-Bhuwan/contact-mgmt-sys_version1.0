@@ -71,7 +71,7 @@ public class SecurityConfig {
 
 //        Configuration
 //        How route is done??
-        httpSecurity.authorizeRequests(authorize->{
+        httpSecurity.authorizeHttpRequests(authorize->{
 //            authorize.requestMatchers("/home","/register","/services").permitAll(); this will authorize without login
             authorize.requestMatchers("/user/**").authenticated(); //url starting with /user will authorize
             authorize.anyRequest().permitAll();//other request will require authorization
