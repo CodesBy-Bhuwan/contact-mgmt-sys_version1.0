@@ -3,6 +3,7 @@ package com.contactmgmtsystem.full_stack_contactMgmtSys.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -31,5 +32,10 @@ public class UserController {
     public String userProfile(){
         System.out.println("This is userProfile");
         return "user/profile";
+    }
+
+    @PostMapping("/authenticate")
+    public String authenticateUser() {
+        return "redirect:/user/dashboard";  // This might be handled internally by Spring Security
     }
 }
