@@ -6,6 +6,3 @@
 **FrontEnd**: Html, Css, Thymeleaf
 
 **Database**: MySQL 
-
-Containerization
-
