@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
+
 @Controller
 public class RegisterController {
 
@@ -33,9 +34,11 @@ public class RegisterController {
  4). Message if needed
  5). Redirect to login page
 */
+
+
 //        For Validation
         if(rBindingResult.hasErrors()){
-            return "register";
+            return "fragment/in-up/register";
         }
 
         /*
@@ -69,3 +72,5 @@ public class RegisterController {
         return "redirect:/register";
     }
 }
+
+
