@@ -86,9 +86,9 @@ public class SecurityConfig {
                     */
 //            This is normal practice but chaining method is widely used
             formLogin.loginPage("/login");
-            formLogin.loginProcessingUrl("/authenticate");
+            formLogin.loginProcessingUrl("/user/profile");
             formLogin.successForwardUrl("/user/dashboard");
-//            formLogin.failureUrl("/login?error=true");
+            formLogin.failureUrl("/login?error=true");
             formLogin.usernameParameter("email"); //This will make our username in login page be email instead of username
             formLogin.passwordParameter("password");
 /*            Handling if failure is occured
