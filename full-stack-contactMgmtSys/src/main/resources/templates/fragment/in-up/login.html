@@ -25,10 +25,10 @@
                 <p class="font-normal text-gray-400 dark:text-gray-400">You are supposed to login using your username and password.
                 </p>
 
-                <div class="text-red-400" th:if="${param.error}">
+                <div class="text-red-400 text-center my-3" th:if="${param.error}">
                     Invalid username and password.
                 </div>
-                <div class="text-green-400" th:if="${param.logout}">You have been logged-out.</div>
+                <div class="text-green-400 text-center my-3" th:if="${param.logout}">You have been logged-out.</div>
 
                 <!-- Area to enter data -->
                 <!-- This is the form that shows us registratrion page
@@ -37,7 +37,7 @@
                     -->
                 <form
                         data-th-action="@{'/user/profile'}"
-                        method="GET"
+                        method="POST"
                         class="mt-5"
                         >
                     <!-- 1). data-th-object: now we can use the properties of userForm object directly in the field below
@@ -93,6 +93,12 @@
                     </div>
                 </form>
 
+<!-- Click and login using google or any other social media applications                -->
+                <div class="social-button-container flex justify-center gap-2">
+                    <a
+                            class="login-with-google-btn"
+                            data-th-href="@{'/oauth2/authorization/google'}">Google</a>
+                </div>
 
             </div>
         </div>
