@@ -5,7 +5,6 @@ import com.contactmgmtsystem.full_stack_contactMgmtSys.services.SecurityCustomUs
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -119,8 +118,22 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity.logout(logoutForm->{
             logoutForm.logoutUrl("/do-logout");
-//            logoutForm.logoutSuccessUrl("/login?logout=true");
+            logoutForm.logoutSuccessUrl("/login?logout=true");
         });
+
+/*
+      oauth configuration using google
+    localhost:port/login -> login with Oauth portal
+    Mean it will take us to /oauth2/authorization/google
+ */
+        httpSecurity.oauth2Login(oauth2Login->{oauth2Login.loginPage("/login");
+        });
+
+/*      Only to test and find endpoint through inspection
+       httpSecurity.oauth2Login(Customizer.withDefaults());
+
+ */
+
 
         return httpSecurity.build();
     }
