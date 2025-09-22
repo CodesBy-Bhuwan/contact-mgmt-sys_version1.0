@@ -11,8 +11,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
 
 @Configuration
 public class SecurityConfig {
@@ -51,6 +49,8 @@ public class SecurityConfig {
     @Autowired
     private SecurityCustomUserDetailService customUserDetailService;
 
+    @Autowired
+    private OAuthAuthenticationSuccessHandler handler;
 
     //   For each User or admin or guest can access with their own username and password and nobody can access other info without permission
     @Bean
@@ -129,7 +129,7 @@ public class SecurityConfig {
  */
         httpSecurity.oauth2Login(oauth2Login->{
             oauth2Login.loginPage("/login");
-            oauth2Login.successHandler(null);
+            oauth2Login.successHandler(handler);
         });
 
 /*      Only to test and find endpoint through inspection
