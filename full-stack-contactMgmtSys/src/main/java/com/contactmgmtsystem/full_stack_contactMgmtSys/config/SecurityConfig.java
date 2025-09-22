@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 
 @Configuration
@@ -126,7 +127,9 @@ public class SecurityConfig {
     localhost:port/login -> login with Oauth portal
     Mean it will take us to /oauth2/authorization/google
  */
-        httpSecurity.oauth2Login(oauth2Login->{oauth2Login.loginPage("/login");
+        httpSecurity.oauth2Login(oauth2Login->{
+            oauth2Login.loginPage("/login");
+            oauth2Login.successHandler(null);
         });
 
 /*      Only to test and find endpoint through inspection
