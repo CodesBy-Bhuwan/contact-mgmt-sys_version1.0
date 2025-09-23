@@ -3,10 +3,12 @@ package com.contactmgmtsystem.full_stack_contactMgmtSys.config;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.entities.Providers;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.entities.User;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.helper.AppConst;
+import com.contactmgmtsystem.full_stack_contactMgmtSys.repository.UserRepo;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -23,6 +25,9 @@ import org.slf4j.Logger;
 public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     Logger logger = (Logger) LoggerFactory.getLogger(OAuthAuthenticationSuccessHandler.class);
+
+    @Autowired
+    private UserRepo userRepo;
 
     @Override
     public void onAuthenticationSuccess(
@@ -64,8 +69,14 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
         user1.setProviderUserId(user.getName());
         user1.setRoleList(List.of(AppConst.ROLE_USER));
         user1.setAbout("This account is creaed using google signup!");
-        
 
+        // Logic: If user already exist don't create user instead use existed user to login and create new user if doesn't exist
+
+         User user2= userRepo.findByEmail(email).orElse(null);
+         if (user2 == null){
+             userRepo.save(user1);
+             logger.info(email + "User Saved");
+         }
 
 //      Will redirect to user's profile
         new DefaultRedirectStrategy().sendRedirect(request, response, "/user/profile");
