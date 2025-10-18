@@ -42,6 +42,8 @@ public class UserController {
         String username =  Helper.getEmailOfLoggedInUser(authentication);
         logger.info( username + "User logged in");
 
+//        Fetch user's data from database
+
         System.out.println("This is userProfile");
         return "user/profile";
     }
