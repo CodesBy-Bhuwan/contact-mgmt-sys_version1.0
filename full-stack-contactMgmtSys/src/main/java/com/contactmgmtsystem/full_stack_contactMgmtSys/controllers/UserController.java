@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +46,7 @@ public class UserController {
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
 //    In RequestMethod default method is GET
-    public String userProfile(Authentication authentication){
+    public String userProfile(Model model, Authentication authentication){
 
         String username =  Helper.getEmailOfLoggedInUser(authentication);
         logger.info( username + "User logged in");
@@ -56,6 +57,9 @@ public class UserController {
 
         System.out.println(user.getName());
         System.out.println(user.getEmail());
+
+        model.addAttribute("loggedInUser", user);
+
         return "user/profile";
     }
 
