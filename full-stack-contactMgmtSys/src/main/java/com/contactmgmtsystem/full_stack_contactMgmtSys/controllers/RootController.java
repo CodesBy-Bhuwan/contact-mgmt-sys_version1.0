@@ -22,6 +22,11 @@ public class RootController {
     @ModelAttribute
     public void addLoggedInUserInfo(Model model, Authentication authentication) {
 
+//      If the user is not authenticated then user willn't be able to view profile or dashboard
+        if(authentication != null) {
+            return;
+        }
+
         System.out.println("Testing if all model(inside user's profile) gets user's info");
 
         String username =  Helper.getEmailOfLoggedInUser(authentication);
