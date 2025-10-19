@@ -29,17 +29,11 @@ public class RootController {
 
 //        Fetch user's data from database
         User user = userServices.getUserByEmail(username);
+        System.out.println(user.getName());
+        System.out.println(user.getEmail());
+        model.addAttribute("loggedInUser", username);
 
-        if (user != null) {
 
-            model.addAttribute("loggedInUser", username);
-
-        }else {
-            System.out.println(user.getName());
-            System.out.println(user.getEmail());
-            model.addAttribute("loggedInUser", username);
-
-        }
     }
 
 }
