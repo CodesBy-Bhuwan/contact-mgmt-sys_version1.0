@@ -23,21 +23,7 @@ public class UserController {
     @Autowired
     private UserServices userServices;
 
-    @ModelAttribute
-    public void addLoggedInUserInfo(Model model, Authentication authentication) {
 
-        System.out.println("Testing if all model(inside user's profile) gets user's info");
-
-        String username =  Helper.getEmailOfLoggedInUser(authentication);
-        logger.info( username + "User logged in");
-
-//        Fetch user's data from database
-        User user = userServices.getUserByEmail(username);
-        System.out.println(user.getName());
-        System.out.println(user.getEmail());
-        model.addAttribute("loggedInUser", user);
-
-    }
 
 
     /*Steps to follow:
