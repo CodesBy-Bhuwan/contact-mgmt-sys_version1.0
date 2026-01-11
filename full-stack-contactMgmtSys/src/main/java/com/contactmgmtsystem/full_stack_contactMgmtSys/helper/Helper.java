@@ -11,11 +11,14 @@ public class Helper {
 
     public static String getEmailOfLoggedInUser(Authentication authentication) {
 
+        if (authentication == null || !authentication.isAuthenticated()){
+            return null;
+        }
 
         if (authentication instanceof OAuth2AuthenticationToken) {
 
 
-            var aOAuth2AuthenticationToken=(OAuth2AuthenticationToken)authentication;
+            var aOAuth2AuthenticationToken = (OAuth2AuthenticationToken) authentication;
             var clientId = aOAuth2AuthenticationToken.getAuthorizedClientRegistrationId();
 
             var oauth2User = (OAuth2User)authentication.getPrincipal();
@@ -28,7 +31,7 @@ public class Helper {
             }
 
 //        If User Logs in using Facebook
-            else if(clientId.equalsIgnoreCase("facebook")){
+            else if (clientId.equalsIgnoreCase("facebook")){
                 System.out.println("Logged in via facebook");
                 username = oauth2User.getAttribute("email") != null ? oauth2User.getAttribute("email").toString() : oauth2User.getAttribute("login").toString() + "@fbook.com";
             }

@@ -50,10 +50,10 @@ public class ProfileController {
     public String login(){
         return new String ("fragment/in-up/login");
     }
-    @PostMapping("/login")
-    public String loginSubmit(){
-        return new String ("fragment/in-up/login");
-    }
+//    @PostMapping("/login")
+//    public String loginSubmit(){
+//        return new String ("fragment/in-up/login");
+//    }
 
 //    @PostMapping("/login")
 //    public String loginSubmit(@ModelAttribute("userForm") UserForm userForm){}

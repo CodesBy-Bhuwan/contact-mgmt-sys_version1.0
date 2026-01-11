@@ -32,11 +32,20 @@ public class RootController {
         String username =  Helper.getEmailOfLoggedInUser(authentication);
         logger.info( username + "User logged in");
 
-//        Fetch user's data from database
-        User user = userServices.getUserByEmail(username);
-        System.out.println(user.getName());
-        System.out.println(user.getEmail());
-        model.addAttribute("loggedInUser", username);
+
+//       Fetch user's data from database
+//        User user = userServices.getUserByEmail(username);
+//        System.out.println(user);
+//        System.out.println(user.getUsername());
+//        System.out.println(user.getEmail());
+//        model.addAttribute("loggedInUser", username);
+
+//        User user = userRepository.findByUsername(principal.getName());
+//        if (user == null) {
+//            return;
+//        }
+//
+//        model.addAttribute("username", user.getUsername());
 
 
     }
