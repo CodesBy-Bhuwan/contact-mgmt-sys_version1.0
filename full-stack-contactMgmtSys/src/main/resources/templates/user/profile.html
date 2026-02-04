@@ -1,13 +1,14 @@
+
+<!-- The profile is dashboard and dashboard is profile-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Profile</title>
+    <title>Dashboard</title>
 </head>
 <body>
-    <h1>This is user profile</h1>
+<h1>This is Dashboard.</h1>
 
-    <h2 data-th-text="${loggedInUser.name}""></h2>
-    <h2 data-th-text="${loggedInUser.email}""></h2>
+<a data-th-href="@{'/do-logout'}">Log Out</a>
 </body>
 </html>

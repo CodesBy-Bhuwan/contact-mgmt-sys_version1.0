@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- namespace of thyemeleaf denoted by xmlns:th
+    th-fragment id syntax for creating fragment-->
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{index :: parent(~{::#content},~{::title},~{::script})}">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
+<!--    <title data-th-text="${loggedInUser.name} +' | SCM '">Contact Smartly</title>-->
+    <title>Contact Smartly</title>
+
 </head>
 <body>
-    <h1>This is Dashboard.</h1>
 
-    <a data-th-href="@{'/do-logout'}">Log Out</a>
+<h1 id="content">Welcome to Personal Profile page</h1>
+<h2>Here are the basic summary</h2>
+
+<!--<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>-->
 </body>
 </html>
