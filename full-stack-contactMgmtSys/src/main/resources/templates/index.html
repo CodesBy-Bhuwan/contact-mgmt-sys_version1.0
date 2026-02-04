@@ -23,8 +23,16 @@
 </head>
 <body class="dark:bg-gray-800 bg-green-100 dark:text-white">
     <!-- This is for navbar -->
-<navbar data-th-insert="fragment/navbar/navbar::navbar"></navbar>
+<div th:if="${loggedInUser}">
 
+    <div data-th-replace="~{user/user_navbar::user-navbar}"></div>
+
+</div>
+    <div data-th-unless="${loggedInUser}">
+
+<navbar data-th-insert="~{fragment/navbar/navbar::navbar}"></navbar>
+
+    </div>
 <!-- This is for other boby component -->
 <div class="p-5">
     <section data-th-replace="${content}"></section>
