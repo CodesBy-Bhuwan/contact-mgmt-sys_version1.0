@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @ControllerAdvice
 public class RootController {
 
-    private Logger logger = LoggerFactory.getLogger(RootController.class);
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private UserServices userServices;
@@ -23,7 +23,7 @@ public class RootController {
     public void addLoggedInUserInfo(Model model, Authentication authentication) {
 
 //      If the user is not authenticated then user willn't be able to view profile or dashboard
-        if(authentication != null) {
+        if(authentication == null) {
             return;
         }
 
@@ -34,19 +34,19 @@ public class RootController {
 
 
 //       Fetch user's data from database
-//        User user = userServices.getUserByEmail(username);
-//        System.out.println(user);
-//        System.out.println(user.getUsername());
-//        System.out.println(user.getEmail());
-//        model.addAttribute("loggedInUser", username);
+        User user = userServices.getUserByEmail(username);
+        System.out.println(user);
+        System.out.println(user.getUsername());
+        System.out.println(user.getEmail());
+        model.addAttribute("loggedInUser", user);
+/*
+        User user = userRepository.findByUsername(principal.getName());
+        if (user == null) {
+            return;
+        }
 
-//        User user = userRepository.findByUsername(principal.getName());
-//        if (user == null) {
-//            return;
-//        }
-//
-//        model.addAttribute("username", user.getUsername());
-
+        model.addAttribute("username", user.getUsername());
+*/
 
     }
 

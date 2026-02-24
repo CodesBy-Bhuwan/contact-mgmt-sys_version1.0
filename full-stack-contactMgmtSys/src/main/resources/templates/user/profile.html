@@ -1,14 +1,17 @@
-
-<!-- The profile is dashboard and dashboard is profile-->
 <!DOCTYPE html>
-<html lang="en">
+<!-- th:replace will use "parent" fragment from "index" file -->
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{index :: parent(~{::#content},~{::title},~{::script})}">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title data-th-text="${loggedInUser.name} +' | SCM'">Profile Page</title>
 </head>
 <body>
-<h1>This is Dashboard.</h1>
-
-<a data-th-href="@{'/do-logout'}">Log Out</a>
+<div id="content">
+    <h1>Profile Page</h1>
+</div>
+<script>
+    console.log("This is profile page")
+</script>
 </body>
 </html>
