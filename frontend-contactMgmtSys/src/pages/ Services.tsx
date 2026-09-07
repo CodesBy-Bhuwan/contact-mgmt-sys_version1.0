@@ -1,6 +1,6 @@
 import React from 'react';
 import { 
-  Phone, Mail, Calendar, Search, 
+  Calendar, Search, 
   Shield, Cloud, Zap, Users,
   CheckCircle 
 } from 'lucide-react';
