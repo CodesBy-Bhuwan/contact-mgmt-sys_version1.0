@@ -2,6 +2,7 @@ package com.contactmgmtsystem.full_stack_contactMgmtSys.controllers;
 
 import com.contactmgmtsystem.full_stack_contactMgmtSys.entities.User;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.helper.Helper;
+import com.contactmgmtsystem.full_stack_contactMgmtSys.helper.ResourceNotFoundException;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.services.UserServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,32 +23,22 @@ public class RootController {
     @ModelAttribute
     public void addLoggedInUserInfo(Model model, Authentication authentication) {
 
-//      If the user is not authenticated then user willn't be able to view profile or dashboard
-        if(authentication == null) {
+        if (authentication == null || !authentication.isAuthenticated()) {
             return;
         }
 
-        System.out.println("Testing if all model(inside user's profile) gets user's info");
-
-        String username =  Helper.getEmailOfLoggedInUser(authentication);
-        logger.info( username + "User logged in");
-
-
-//       Fetch user's data from database
-        User user = userServices.getUserByEmail(username);
-        System.out.println(user);
-        System.out.println(user.getUsername());
-        System.out.println(user.getEmail());
-        model.addAttribute("loggedInUser", user);
-/*
-        User user = userRepository.findByUsername(principal.getName());
-        if (user == null) {
+        String username = Helper.getEmailOfLoggedInUser(authentication);
+        if (username == null) {
             return;
         }
 
-        model.addAttribute("username", user.getUsername());
-*/
-
+        try {
+            User user = userServices.getUserByEmail(username);
+            model.addAttribute("loggedInUser", user);
+        } catch (ResourceNotFoundException e) {
+            // Authenticated principal missing from DB (e.g. deleted mid-session).
+            // Render pages without the attribute instead of 500-ing on every request.
+            logger.warn("Logged-in user not found in DB: {}", username);
+        }
     }
-
 }

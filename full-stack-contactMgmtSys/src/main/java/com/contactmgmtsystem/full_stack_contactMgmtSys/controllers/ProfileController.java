@@ -60,13 +60,10 @@ public class ProfileController {
 
 
     @GetMapping("/register")
-    public String register(Model model){
-
-        UserForm userForm = new UserForm();
-        /* To assign default value
-        userForm.setName("MyName");
-         */
-        model.addAttribute("userForm", userForm);
+    public String register(Model model) {
+        if (!model.containsAttribute("userForm")) {
+            model.addAttribute("userForm", new UserForm());
+        }
         return "fragment/in-up/register";
     }
 

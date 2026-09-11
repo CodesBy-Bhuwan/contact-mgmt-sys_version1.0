@@ -8,13 +8,13 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Component
 public class SessionHelper {
 
-
     public static void removeMessage() {
-//        This is request the content to hold until session ends firtly it will get the reqAttr and for that first it will get the requst and get the session using servletRequest
         try {
-            HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
-        }catch (Exception e) {
-            System.out.println("Error in session"+ e);
+            HttpSession session = ((ServletRequestAttributes) RequestContextHolder
+                    .getRequestAttributes()).getRequest().getSession();
+            session.removeAttribute("message");   // FIX: was fetched but never removed
+        } catch (Exception e) {
+            System.out.println("Error in session: " + e);
         }
     }
 }

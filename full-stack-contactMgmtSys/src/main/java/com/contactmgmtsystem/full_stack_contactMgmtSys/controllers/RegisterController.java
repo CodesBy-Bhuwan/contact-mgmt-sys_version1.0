@@ -7,70 +7,74 @@ import com.contactmgmtsystem.full_stack_contactMgmtSys.message.MessageType;
 import com.contactmgmtsystem.full_stack_contactMgmtSys.services.UserServices;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class RegisterController {
 
+    private Logger logger = LoggerFactory.getLogger(RegisterController.class);
+
     @Autowired
     private UserServices userServices;
 
-//  Processing register
-    @RequestMapping(value="/do-register", method = RequestMethod.POST)
-    public String processRegister(@Valid @ModelAttribute UserForm userForm, BindingResult rBindingResult, HttpSession session) {
-//        BindingResult will notify if error
-        System.out.println("procseeing registraiton");
-/*  Steps to follow for the registration:
- 1). Fetch the data or Input from the form
- 2). Validate the input data
- 3). Save into the database
- 4). Message if needed
- 5). Redirect to login page
-*/
+    @RequestMapping(value = "/do-register", method = RequestMethod.POST)
+    public String processRegister(@Valid @ModelAttribute UserForm userForm,
+                                  BindingResult rBindingResult,
+                                  HttpSession session,
+                                  RedirectAttributes redirectAttributes) {
 
-
-//        For Validation
-        if(rBindingResult.hasErrors()){
-            return "fragment/in-up/register";
+        // 1) Validation errors -> redirect back, carrying the typed values + errors
+        if (rBindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userForm", userForm);
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.userForm", rBindingResult);
+            return "redirect:/register";
         }
 
-        /*
-    User user = User.builder()
-            .name(userForm.getName())
-            .email(userForm.getEmail())
-            .password(userForm.getPassword())
-            .about(userForm.getAbout())
-            .phoneNumber(userForm.getPhoneNumber())
-            .profilePic("https://t4.ftcdn.net/jpg/07/08/47/75/360_F_708477508_DNkzRIsNFgibgCJ6KoTgJjjRZNJD4mb4.jpg")
-            .build(); */
+        // 2) Duplicate email -> friendly message instead of a raw 500
+        if (userServices.isUserExistByEmail(userForm.getEmail())) {
+            session.setAttribute("message", Message.builder()
+                    .content("Email is already registered. Try logging in instead.")
+                    .type(MessageType.red)
+                    .build());
+            return "redirect:/register";
+        }
 
+        // 3) Build entity
         User user = new User();
         user.setName(userForm.getName());
         user.setEmail(userForm.getEmail());
         user.setPassword(userForm.getPassword());
         user.setPhoneNumber(userForm.getPhoneNumber());
         user.setAbout(userForm.getAbout());
-//        user.setEnabled(true);
         user.setProfilePic("https://t4.ftcdn.net/jpg/07/08/47/75/360_F_708477508_DNkzRIsNFgibgCJ6KoTgJjjRZNJD4mb4.jpg");
 
+        // 4) Save, with a backstop for unique-constraint violations (e.g. duplicate phone)
+        try {
+            userServices.saveUser(user);
+        } catch (DataIntegrityViolationException e) {
+            logger.error("Registration failed for {}", userForm.getEmail(), e);
+            session.setAttribute("message", Message.builder()
+                    .content("Registration failed — email or phone number may already be in use.")
+                    .type(MessageType.red)
+                    .build());
+            return "redirect:/register";
+        }
 
-        User savedUser = userServices.saveUser(user);
-//        System.out.println(userForm);   tested
-        System.out.println("saved user");
-//        Message will be shown after successful registration. using enum MessageYpe.green means in green color
-        Message message = Message.builder().content("Registered successfully").type(MessageType.green).build();
+        session.setAttribute("message", Message.builder()
+                .content("Registered successfully")
+                .type(MessageType.green)
+                .build());
 
-//      adding message when data is input in sign-up/registration form
-        session.setAttribute("message", message);
-        return "redirect:/register";
+        return "redirect:/login";
     }
 }
-
-

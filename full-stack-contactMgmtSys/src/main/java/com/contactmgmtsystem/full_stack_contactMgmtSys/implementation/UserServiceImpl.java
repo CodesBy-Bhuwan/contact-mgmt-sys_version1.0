@@ -5,6 +5,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.contactmgmtsystem.full_stack_contactMgmtSys.helper.AppConst;
+import com.contactmgmtsystem.full_stack_contactMgmtSys.helper.ResourceNotFoundException;
+import com.contactmgmtsystem.full_stack_contactMgmtSys.repository.UserRepo;
+import com.contactmgmtsystem.full_stack_contactMgmtSys.services.UserServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,41 +15,29 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.contactmgmtsystem.full_stack_contactMgmtSys.entities.User;
-import com.contactmgmtsystem.full_stack_contactMgmtSys.helper.ResourceNotFoundException;
-import com.contactmgmtsystem.full_stack_contactMgmtSys.repository.UserRepo;
-import com.contactmgmtsystem.full_stack_contactMgmtSys.services.UserServices;
 
 @Service
 public class UserServiceImpl implements UserServices {
-    
-    // To save these we will use Repository
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private UserRepo userRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
-    // With property-injection we can also use constructor-injection for that we will create parameterized constructor
-
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-
     @Override
     public User saveUser(User user) {
-        // Before saving we need to generate dynamic user id
-        String userId = UUID.randomUUID().toString();
-        user.setUserId(userId);
+        user.setUserId(UUID.randomUUID().toString());
 
-//        password encoder
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getPassword() != null && !user.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
 
-        user.setRoleList((List.of(AppConst.ROLE_USER)));
-
-        logger.info(user.getProviders().toString());
+        user.setRoleList(List.of(AppConst.ROLE_USER));
+        logger.info("Saving user, provider: {}", user.getProviders());
         return userRepo.save(user);
-
     }
 
     @Override
@@ -56,12 +47,11 @@ public class UserServiceImpl implements UserServices {
 
     @Override
     public Optional<User> updateUser(User user) {
-        
-        User user2=userRepo.findById(user.getUserId()).orElseThrow(()-> new ResourceNotFoundException("User Not Found"));
-        // Now we have to update user2 with user
+        User user2 = userRepo.findById(user.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
+
         user2.setName(user.getName());
         user2.setEmail(user.getEmail());
-        user2.setPassword(user.getPassword());
         user2.setAbout(user.getAbout());
         user2.setPhoneNumber(user.getPhoneNumber());
         user2.setProfilePic(user.getProfilePic());
@@ -71,42 +61,56 @@ public class UserServiceImpl implements UserServices {
         user2.setProviders(user.getProviders());
         user2.setProviderUserId(user.getProviderUserId());
 
-        // Now these data has to be saved in db
-        User save = userRepo.save(user2);
-        return Optional.ofNullable(save);
+        // FIX: only overwrite the password when a new one was actually supplied,
+        // and encode it. The old code stored whatever came in — raw or null.
+//        if (user.getPassword() != null && !user.getPassword().isBlank()) {
+//            user2.setPassword(passwordEncoder.encode(user.getPassword()));
+//        }
+
+        return Optional.ofNullable(userRepo.save(user2));
     }
 
     @Override
     public void deleteUser(String id) {
-        // To deleteUser we need to fetch the data first, here we will fetch the data using id(primary key)
-        User user2=userRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("User Not Found"));
+        User user2 = userRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
         userRepo.delete(user2);
-
     }
 
     @Override
     public boolean isUserExist(String userId) {
-        User user2=userRepo.findById(userId).orElse(null);
-        return user2!=null ? true : false;
+        return userRepo.existsById(userId);   // FIX: no entity load needed
     }
 
     @Override
-    public boolean isUSerExistByEmail(String email) {
-        // We can use custom find methods for that we will make optional method in UserRepo to find User using Email
-        User user = userRepo.findByEmail(email).orElse(null);
-        return user!=null ? true : false;
+    public boolean isUserExistByEmail(String email) {
+        return userRepo.existsByEmail(email); // FIX: same
     }
 
     @Override
     public List<User> getAllUsers() {
-        // To find all the users we can use findAll() mehtod
         return userRepo.findAll();
     }
 
     @Override
     public User getUserByEmail(String email) {
-        return userRepo.findByEmail(email).orElseThrow(()-> new ResourceNotFoundException("User not found"));
+        return userRepo.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
+    @Override
+    public void updatePassword(String userId, String rawPassword) {
+        User u = userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        u.setPassword(passwordEncoder.encode(rawPassword));
+        userRepo.save(u);
+    }
 
+    @Override
+    public void setUserEnabled(String userId, boolean enabled) {
+        User u = userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        u.setEnabled(enabled);   // false = soft delete: Spring Security blocks login via isEnabled()
+        userRepo.save(u);
+    }
 }

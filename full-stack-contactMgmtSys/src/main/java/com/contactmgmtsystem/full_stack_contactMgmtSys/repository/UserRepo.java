@@ -7,17 +7,14 @@ import org.springframework.stereotype.Repository;
 
 import com.contactmgmtsystem.full_stack_contactMgmtSys.entities.User;
 
-// Repo are used to interact with db
 @Repository
 public interface UserRepo extends JpaRepository<User, String> {
 
+    Optional<User> findByEmail(String email);
 
+    boolean existsByEmail(String email);
 
-    // This optional custom method is to find using User using Email keeping email args
-    Optional<User>findByEmail(String email);
-
-    /*In case of creating such optional method to find User using 2 arguments:
-    Eg.: Using Email and Password*/
-    Optional<User>findByEmailAndPassword(String email, String password);
-
+    // REMOVED: findByEmailAndPassword — impossible with BCrypt hashes and
+    // it tempts plaintext-password lookups. Login verification happens via
+    // DaoAuthenticationProvider + passwordEncoder.matches().
 }

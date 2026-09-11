@@ -51,9 +51,11 @@ public class UserController {
 
         return "user/profile";
     }
-
+/*
     @PostMapping("/authenticate")
     public String authenticateUser() {
         return "redirect:/user/dashboard";  // This might be handled internally by Spring Security
     }
+
+ */
 }

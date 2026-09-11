@@ -1,12 +1,15 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
-import { Phone, Menu, X } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { Phone, Menu, X, LogOut, LayoutDashboard } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { user, loading, logout } = useAuth();   // NEW: auth state
   const location = useLocation();
+  const navigate = useNavigate();                // NEW: for redirect after logout
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -16,6 +19,13 @@ const Navbar: React.FC = () => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
+
+  // NEW: shared logout handler for desktop + mobile
+  const handleLogout = async () => {
+    setIsOpen(false);
+    await logout();          // clears server session + context user
+    navigate('/');           // land somewhere public
+  };
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-sm sticky top-0 z-50">
@@ -46,22 +56,53 @@ const Navbar: React.FC = () => {
                 {item.name}
               </Link>
             ))}
+            {/* NEW: Dashboard link only makes sense when logged in */}
+            {user && (
+              <Link
+                to="/dashboard"
+                className={`nav-link text-base font-medium flex items-center gap-1 ${
+                  isActive('/dashboard')
+                    ? 'text-primary-600 dark:text-primary-400'
+                    : 'text-gray-700 dark:text-gray-200'
+                }`}
+              >
+                <LayoutDashboard className="h-4 w-4" /> Dashboard
+              </Link>
+            )}
           </div>
 
           {/* Desktop Right Section */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link
-              to="/signup"
-              className="px-4 py-2 text-primary-600 dark:text-primary-400 font-medium hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
-            >
-              Sign up
-            </Link>
-            <Link
-              to="/login"
-              className="btn-primary"
-            >
-              Log in
-            </Link>
+            {/* NEW: while the session check is in flight, render nothing here —
+                prevents a "Log in" flash for users who are actually logged in */}
+            {loading ? null : user ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400"
+                >
+                  Hi, {user.name?.split(' ')[0]}
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <LogOut className="h-4 w-4" /> Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/signup"
+                  className="px-4 py-2 text-primary-600 dark:text-primary-400 font-medium hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+                >
+                  Sign up
+                </Link>
+                <Link to="/login" className="btn-primary">
+                  Log in
+                </Link>
+              </>
+            )}
             <button
               onClick={toggleTheme}
               className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
@@ -115,21 +156,45 @@ const Navbar: React.FC = () => {
                 {item.name}
               </Link>
             ))}
+            {user && (
+              <Link
+                to="/dashboard"
+                className={`block px-3 py-2 rounded-lg text-base font-medium ${
+                  isActive('/dashboard')
+                    ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400'
+                    : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
+                }`}
+                onClick={() => setIsOpen(false)}
+              >
+                Dashboard
+              </Link>
+            )}
             <div className="pt-2 flex flex-col space-y-2">
-              <Link
-                to="/signup"
-                className="px-3 py-2 text-center text-primary-600 dark:text-primary-400 font-medium border border-gray-200 dark:border-gray-700 rounded-lg"
-                onClick={() => setIsOpen(false)}
-              >
-                Sign up
-              </Link>
-              <Link
-                to="/login"
-                className="px-3 py-2 text-center btn-primary"
-                onClick={() => setIsOpen(false)}
-              >
-                Log in
-              </Link>
+              {!loading && user ? (
+                <button
+                  onClick={handleLogout}
+                  className="px-3 py-2 text-center border border-gray-200 dark:border-gray-700 rounded-lg text-gray-700 dark:text-gray-200 flex items-center justify-center gap-2"
+                >
+                  <LogOut className="h-4 w-4" /> Logout ({user.name?.split(' ')[0]})
+                </button>
+              ) : (
+                <>
+                  <Link
+                    to="/signup"
+                    className="px-3 py-2 text-center text-primary-600 dark:text-primary-400 font-medium border border-gray-200 dark:border-gray-700 rounded-lg"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Sign up
+                  </Link>
+                  <Link
+                    to="/login"
+                    className="px-3 py-2 text-center btn-primary"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Log in
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

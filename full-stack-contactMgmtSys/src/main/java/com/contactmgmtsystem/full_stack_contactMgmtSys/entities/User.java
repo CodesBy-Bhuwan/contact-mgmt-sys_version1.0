@@ -17,7 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity(name = "user")
-@Table(name = "user")
+@Table(name = "users")
 // Lombok feature
 @Getter
 @Setter
@@ -29,11 +29,11 @@ public class User implements UserDetails {
 
     @Id
     private String userId;
-    @Column(name = "user_name", nullable = false)
+    @Column(name = "user_name")
     private String name;
     @Column(unique = true, nullable = false)
     private String email;
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String phoneNumber;
     @Column(length = 1000)
     private String about;

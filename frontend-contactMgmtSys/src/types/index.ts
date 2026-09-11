@@ -1,48 +1,27 @@
 // Theme type
 export type Theme = 'light' | 'dark';
 
-// Contact types matching your Java backend
-export interface Contact {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone?: string;
-  company?: string;
-  position?: string;
-  address?: string;
-  notes?: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface CreateContactDto {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone?: string;
-  company?: string;
-  position?: string;
-  address?: string;
-  notes?: string;
-}
-
-export interface UpdateContactDto extends Partial<CreateContactDto> {}
-
-// API Response wrapper
-export interface ApiResponse<T> {
-  data: T;
-  message: string;
-  status: number;
-  timestamp: string;
-}
-
-// User types for authentication
+// ---- Auth ----
+// Matches backend UserDto exactly (from /auth/register and /auth/me)
 export interface User {
-  id: number;
+  userId: string;
+  name: string;
   email: string;
-  firstName: string;
-  lastName: string;
+  phoneNumber: string | null;
+  about: string | null;
+  profilePic: string | null;
+  emailVerified: boolean;
+  provider: 'SELF' | 'GOOGLE' | 'FACEBOOK' | 'GITHUB';
+}
+
+// Field names MUST match backend UserForm — it's @Validated there.
+// NOTE: backend requires name, email, password, phoneNumber AND about.
+export interface SignupDto {
+  name: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
+  about: string;
 }
 
 export interface LoginDto {
@@ -50,15 +29,26 @@ export interface LoginDto {
   password: string;
 }
 
-export interface SignupDto extends LoginDto {
-  firstName: string;
-  lastName: string;
-  confirmPassword: string;
+// ---- Contacts (matches backend Contact entity) ----
+export interface SocialLink {
+  id: number;
+  link: string;
+  title: string;
 }
 
-export interface AuthResponse {
-  user: User;
-  token: string;
+export interface Contact {
+  id: string; // backend generates a UUID string, not a number
+  name: string;
+  email: string;
+  phoneNumber?: string;
+  address?: string;
+  description?: string;
+  picture?: string;
+  fav?: boolean;
+  webLink?: string;
+  facebookLink?: string;
+  socialLinks?: SocialLink[];
 }
 
-
+export type CreateContactDto = Omit<Contact, 'id' | 'socialLinks'>;
+export type UpdateContactDto = Partial<CreateContactDto>;
