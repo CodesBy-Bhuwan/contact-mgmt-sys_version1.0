@@ -7,6 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': 'http://localhost:5454',
+      '/uploads': 'http://localhost:5454',
       '/authenticate': 'http://localhost:5454',
       '/do-logout': 'http://localhost:5454',
       '/oauth2': 'http://localhost:5454',

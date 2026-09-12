@@ -10,6 +10,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import Services from './pages/Services';
+import AdminPanel from './pages/AdminPanel';
+import AdminRoute from './components/AdminRoute';
 
 function App() {
   return (
@@ -30,6 +32,9 @@ function App() {
                 path="/dashboard"
                 element={<ProtectedRoute><Dashboard /></ProtectedRoute>}
               />
+              <Route element={<AdminRoute />}>
+                <Route path="/admin" element={<AdminPanel />} />
+              </Route>
             </Routes>
           </div>
         </Router>

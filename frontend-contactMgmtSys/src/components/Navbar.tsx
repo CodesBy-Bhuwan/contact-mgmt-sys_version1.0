@@ -169,6 +169,13 @@ const Navbar: React.FC = () => {
                 Dashboard
               </Link>
             )}
+            {user?.roles?.includes('ROLE_ADMIN') && (
+              <Link to="/admin"
+                className={`nav-link text-base font-medium ${isActive('/admin') ? 'text-primary-600 dark:text-primary-400' : 'text-gray-700 dark:text-gray-200'}`}>
+                Admin
+              </Link>
+            )}
+
             <div className="pt-2 flex flex-col space-y-2">
               {!loading && user ? (
                 <button

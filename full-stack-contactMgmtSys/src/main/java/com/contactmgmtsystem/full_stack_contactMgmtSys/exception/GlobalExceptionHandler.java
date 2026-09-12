@@ -8,6 +8,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import java.util.HashMap;
+
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -21,5 +24,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> duplicate(DataIntegrityViolationException e) {
         return ResponseEntity.badRequest().body(
                 Map.of("error", "Duplicate value — email or phone already in use"));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> validation(MethodArgumentNotValidException e) {
+        Map<String, String> errors = new HashMap<>();
+        e.getBindingResult().getFieldErrors()
+                .forEach(fe -> errors.put(fe.getField(), fe.getDefaultMessage()));
+        return ResponseEntity.badRequest().body(errors);
     }
 }

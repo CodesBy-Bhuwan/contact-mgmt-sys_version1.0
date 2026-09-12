@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { Contact, CreateContactDto, UpdateContactDto, LoginDto, SignupDto, User } from '../types';
+import { Contact, LoginDto, SignupDto, User } from '../types';
+
+import { ContactInput, AdminUser, AdminUserDetail } from '../types';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5454/api';
 
@@ -53,6 +55,7 @@ export const loginWithFacebook = () => { window.location.href = `${API_ROOT}/oau
 
 // Contacts — signatures kept exactly as yours. These will 401 until the
 // contacts layer exists on the backend (see last section).
+/*
 export const contactsApi = {
   getAllContacts: async (): Promise<Contact[]> => {
     const response = await api.get('/contacts');
@@ -76,6 +79,60 @@ export const contactsApi = {
   searchContacts: async (query: string): Promise<Contact[]> => {
     const response = await api.get(`/contacts/search?q=${encodeURIComponent(query)}`);
     return response.data;
+  },
+};
+*/
+
+// ...authApi unchanged (login/signup/logout/getCurrentUser from before)...
+
+export const contactsApi = {
+  getAll: async (): Promise<Contact[]> =>
+    (await api.get<Contact[]>('/contacts')).data,
+  get: async (id: string): Promise<Contact> =>
+    (await api.get<Contact>(`/contacts/${id}`)).data,
+  create: async (data: ContactInput): Promise<Contact> =>
+    (await api.post<Contact>('/contacts', data)).data,
+  update: async (id: string, data: ContactInput): Promise<Contact> =>
+    (await api.put<Contact>(`/contacts/${id}`, data)).data,
+  remove: async (id: string): Promise<void> => {
+    await api.delete(`/contacts/${id}`);
+  },
+  search: async (q: string): Promise<Contact[]> =>
+    (await api.get<Contact[]>(`/contacts/search?q=${encodeURIComponent(q)}`)).data,
+  toggleFav: async (id: string): Promise<Contact> =>
+    (await api.patch<Contact>(`/contacts/${id}/fav`)).data,
+  // The ONLY call that gets a decrypted password — backend returns {password}
+  revealPassword: async (id: string): Promise<string> =>
+    (await api.get<{ password: string }>(`/contacts/${id}/password`)).data.password,
+};
+
+export const userApi = {
+  updateMe: async (data: { name?: string; phoneNumber?: string; about?: string }): Promise<User> =>
+    (await api.put<User>('/users/me', data)).data,
+  uploadPicture: async (file: File): Promise<User> => {
+    const fd = new FormData();
+    fd.append('file', file);
+    return (await api.post<User>('/users/me/picture', fd, {
+      headers: { 'Content-Type': 'multipart/form-data' }, // axios adds the boundary
+    })).data;
+  },
+};
+
+export const adminApi = {
+  listUsers: async (): Promise<AdminUser[]> =>
+    (await api.get<AdminUser[]>('/admin/users')).data,
+  getUser: async (id: string): Promise<AdminUserDetail> =>
+    (await api.get<AdminUserDetail>(`/admin/users/${id}`)).data,
+  updateUser: async (id: string, data: { name?: string; email?: string; phoneNumber?: string; about?: string }): Promise<AdminUser> =>
+    (await api.put<AdminUser>(`/admin/users/${id}`, data)).data,
+  softDelete: async (id: string): Promise<void> => {
+    await api.delete(`/admin/users/${id}`);
+  },
+  setEnabled: async (id: string, enabled: boolean): Promise<void> => {
+    await api.put(`/admin/users/${id}/enabled`, { enabled });
+  },
+  resetPassword: async (id: string, password: string): Promise<void> => {
+    await api.put(`/admin/users/${id}/password`, { password });
   },
 };
 
